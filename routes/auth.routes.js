@@ -26,7 +26,8 @@ router.post("/signup", isLoggedOut, (req, res, next) => {
 
   if (!username || !email || !password) {
     res.render("auth/signup", {
-      errorMessage: "All fields are mandatory. Please provide your username, email and password."
+      errorMessage:
+        "All fields are mandatory. Please provide your username, email and password.",
     });
     return;
   }
@@ -36,7 +37,7 @@ router.post("/signup", isLoggedOut, (req, res, next) => {
   if (!regex.test(password)) {
     res.status(500).render("auth/signup", {
       errorMessage:
-        "Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter."
+        "Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter.",
     });
     return;
   }
@@ -51,7 +52,7 @@ router.post("/signup", isLoggedOut, (req, res, next) => {
         // passwordHash => this is the key from the User model
         //     ^
         //     |            |--> this is placeholder (how we named returning value from the previous method (.hash()))
-        passwordHash: hashedPassword
+        passwordHash: hashedPassword,
       });
     })
     .then((userFromDB) => {
@@ -63,7 +64,8 @@ router.post("/signup", isLoggedOut, (req, res, next) => {
         res.status(500).render("auth/signup", { errorMessage: error.message });
       } else if (error.code === 11000) {
         res.status(500).render("auth/signup", {
-          errorMessage: "Username and email need to be unique. Either username or email is already used."
+          errorMessage:
+            "Username and email need to be unique. Either username or email is already used.",
         });
       } else {
         next(error);
@@ -84,7 +86,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
 
   if (email === "" || password === "") {
     res.render("auth/login", {
-      errorMessage: "Please enter both, email and password to login."
+      errorMessage: "Please enter both, email and password to login.",
     });
     return;
   }
@@ -92,7 +94,9 @@ router.post("/login", isLoggedOut, (req, res, next) => {
   User.findOne({ email })
     .then((user) => {
       if (!user) {
-        res.render("auth/login", { errorMessage: "Email is not registered. Try with other email." });
+        res.render("auth/login", {
+          errorMessage: "Email is not registered. Try with other email.",
+        });
         return;
       } else if (bcryptjs.compareSync(password, user.passwordHash)) {
         req.session.user = user;
