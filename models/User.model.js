@@ -9,7 +9,6 @@ const userSchema = new Schema(
       trim: true,
       required: [true, "Username is required."],
       unique: true,
-      imageUrl: String,
     },
     email: {
       type: String,
@@ -24,6 +23,9 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required."],
     },
+    avatar: {
+      type: String,
+    }
   },
   {
     timestamps: true,

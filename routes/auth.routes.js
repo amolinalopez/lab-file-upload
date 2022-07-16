@@ -10,8 +10,13 @@ const saltRounds = 10;
 // Require the User model in order to interact with the database
 const User = require("../models/User.model");
 
+// Require the Post model in order to interact with the database
+const Post = require("../models/Post.model");
+
 // require (import) middleware functions
 const { isLoggedIn, isLoggedOut } = require("../middleware/route-guard.js");
+
+const multer = require(./config/cloudinary.config.js)  
 
 ////////////////////////////////////////////////////////////////////////
 ///////////////////////////// SIGNUP //////////////////////////////////
@@ -117,8 +122,26 @@ router.post("/logout", isLoggedIn, (req, res) => {
   res.redirect("/");
 });
 
-router.get("/user-profile", isLoggedIn, (req, res) => {
+router.get("/user-profile", (req, res) => {
   res.render("users/user-profile");
 });
 
+
+////////////////////////////////////////////////////////////////////////
+///////////////////////////// HELLO ☀️ ////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+router.get("/post-form", isLoggedIn, (req, res) => {
+  res.render("users/user-profile");
+});
+
+
+
+
+
+
+
+
+
 module.exports = router;
+
+
